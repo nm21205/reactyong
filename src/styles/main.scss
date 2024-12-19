@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: $secondary-color; // 변수 사용
+  @include box-shadow(0, 2px, 4px);
+}
+
+.header__title {
+  font-size: 24px;
+  color: $text-color; // 변수 사용
+}
