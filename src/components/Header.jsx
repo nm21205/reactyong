@@ -1,13 +1,25 @@
+// src/components/Header.jsx
 import React from 'react';
 import SearchBar from './SearchBar';
-import './Header.scss'; // 필요시 추가 스타일 파일
+import { FcPicture } from "react-icons/fc";
+import '../styles/header.scss';
+
 
 const Header = () => {
     return (
-        <header className="header">
-            <h1 className="header__title">Pexels Clone</h1>
-            <SearchBar />
-        </header>
+        
+        <div className="header">
+            <div>
+                <h1>Pexels</h1>
+            </div>
+            <div className="head">
+                <div>
+                <FcPicture size={50}/>
+                <h2 className="header__title">Pexels Clone</h2>
+                </div>
+            <SearchBar/>
+            </div>
+        </div>
     );
 };
 
