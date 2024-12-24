@@ -1,13 +1,42 @@
-// src/components/SearchResults.jsx
-import React from 'react';
+// src/components/SearchResult.jsx
+import React, { useEffect, useState } from 'react';
 
-const SearchResults = () => {
+const SearchResult = ({ searchTerm }) => {
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        console.log('Fetching results for:', searchTerm); // 디버깅용 로그
+        const response = await fetch(`https://api.unsplash.com/search/photos?query=${searchTerm}`, {
+          headers: {
+            Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEY}` // 환경 변수에서 API 키 가져오기
+          }
+        });
+        const data = await response.json();
+        console.log('API response:', data); // API 응답 로그
+        setResults(data.results || []); // 응답 데이터가 예상한 구조인지 확인
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
+    };
+
+    if (searchTerm) {
+      fetchResults();
+    }
+  }, [searchTerm]);
+
   return (
-    <div className="search-results">
-      {/* Pexels API 응답 데이터를 받아서 여기에 표시할 예정 */}
-      <div>Search Results will be displayed here</div>
+    <div>
+      {results.length > 0 ? (
+        results.map(photo => (
+          <img key={photo.id} src={photo.urls.small} alt={photo.alt_description} />
+        ))
+      ) : (
+        <p>No results found for "{searchTerm}"</p>
+      )}
     </div>
   );
 };
 
-export default SearchResults;
+export default SearchResult;
